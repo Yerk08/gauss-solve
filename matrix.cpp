@@ -28,24 +28,27 @@ public:
 		return cout;
 	}
 
-	void first_operator(const size_t i, const size_t j) {
+	void first_operator(const size_t i, const size_t j, bool do_print = false) {
 		swap(mt[i], mt[j]);
-		std::cout << "-- swap (" << i + 1 << ") and (" << j + 1 << ") rows\n" << *this << "\n";
+		std::cout << "-- swap (" << i + 1 << ") and (" << j + 1 << ") rows\n";
+		if (do_print) std::cout << *this << "\n";
 	}
 
-	void second_operator(const size_t i, const T a) {
+	void second_operator(const size_t i, const T a, bool do_print = false) {
 		for (int j = 0; j < mt[i].size(); ++j) {
 			mt[i][j] = mt[i][j] * a;
 		}
-		std::cout << "-- multiply row (" << i + 1 << ") by " << a << "\n" << *this << "\n";
+		std::cout << "-- multiply row (" << i + 1 << ") by " << a << "\n";
+		if (do_print) std::cout << *this << "\n";
 	}
 
-	void third_operator(const size_t i, const size_t j, const T a) {
+	void third_operator(const size_t i, const size_t j, const T a, bool do_print = false) {
 		if (i == j) throw std::runtime_error("Add two same rows");
 		for (int k = 0; k < mt[i].size(); ++k) {
 			mt[i][k] = mt[i][k] + mt[j][k] * a;
 		}
-		std::cout << "-- Add to row (" << i + 1 << ") row (" << j + 1 << ") mul. by " << a << "\n" << *this << "\n";
+		std::cout << "-- Add to row (" << i + 1 << ") row (" << j + 1 << ") mul. by " << a << "\n";
+		if (do_print) std::cout << *this << "\n";
 	}
 
 	void gauss_method() {
@@ -60,7 +63,7 @@ public:
 					}
 				}
 				T a = T(1) / mt[cur_i][cur_j];
-				if (a != 1) second_operator(cur_i, a);
+				second_operator(cur_i, a, true);
 				++cur_i;
 				++cur_j;
 			} else { // part 2
@@ -68,7 +71,7 @@ public:
 				for (size_t k = cur_i; k < mt.size(); ++k) {
 					if (mt[k][cur_j] != 0) {
 						found = true;
-						first_operator(cur_i, k);
+						first_operator(cur_i, k, true);
 						break;
 					}
 				}

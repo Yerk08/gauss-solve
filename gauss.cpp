@@ -21,6 +21,7 @@ int main() {
 	cin >> n >> m;
 	matrix<MyInt> mt(n, m);
 	cin >> mt;
+	cout << mt << "\n";
 	mt.gauss_method();
 }
 
